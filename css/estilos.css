@@ -1,0 +1,169 @@
+/* ====== Estilos complementarios a Tailwind ====== */
+
+/* Fondo del hero (reemplaza por una foto real: url('../img/hero.jpg')) */
+.hero-bg {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(16, 185, 129, .35), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(4, 120, 87, .45), transparent 50%),
+    linear-gradient(135deg, #022c22 0%, #064e3b 50%, #020617 100%);
+  /* background-image: linear-gradient(rgba(2,6,23,.6), rgba(2,6,23,.6)), url('../img/hero.jpg'); */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Líneas de cancha decorativas */
+.pitch-lines {
+  background-image:
+    linear-gradient(rgba(255,255,255,.5) 2px, transparent 2px),
+    radial-gradient(circle at center, transparent 120px, rgba(255,255,255,.5) 121px, rgba(255,255,255,.5) 123px, transparent 124px);
+  background-size: 100% 50%, 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Marcadores de posición para imágenes (se ven bien aunque no haya foto) */
+.img-slot {
+  background: linear-gradient(135deg, #10b981, #064e3b);
+}
+.img-slot-2 {
+  background: linear-gradient(135deg, #0ea5e9, #0f172a);
+}
+
+/* Campos de formulario */
+.campo {
+  margin-top: .375rem;
+  width: 100%;
+  border-radius: .75rem;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: .75rem 1rem;
+  font-size: .95rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+.campo:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, .15);
+  background: #fff;
+}
+
+/* Navbar al hacer scroll */
+#navbar.scrolled {
+  background: rgba(2, 6, 23, .92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, .25);
+}
+
+/* Animación de aparición */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+/* Botones de horario (selección múltiple) */
+.slot {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: .75rem;
+  padding: .6rem .25rem;
+  font-size: .9rem;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+@media (hover: hover) {
+  .slot:hover:not(:disabled) { border-color: #10b981; }
+}
+.slot[aria-pressed="true"] {
+  background: #10b981;
+  border-color: #10b981;
+  color: #fff;
+}
+/* Bloqueado porque aún no elige fecha */
+.slot:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+/* Hora que ya pasó hoy */
+.slot.pasada { text-decoration: line-through; opacity: .35; }
+.slot:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, .25);
+}
+
+/* Precio pequeño dentro de cada botón de horario */
+.slot { display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
+.slot-precio { font-size: .72rem; font-weight: 400; opacity: .7; margin-top: .15rem; }
+
+/* Aviso cuando no eligió horario */
+#resumen-horas.error { color: #dc2626; border-color: #fecaca; background: #fef2f2; }
+
+/* ====== Ajustes para celular ====== */
+
+/* Título de cada grupo de horarios */
+.grupo-titulo {
+  display: flex;
+  justify-content: space-between;
+  font-size: .8rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: .5rem;
+}
+.grupo-titulo span:last-child { font-weight: 400; color: #94a3b8; }
+
+/* Grilla de horas: 3 columnas en celular y 4 en pantallas más grandes */
+.grilla-horas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem;
+}
+@media (min-width: 640px) {
+  .grilla-horas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Botones cómodos para tocar con el dedo */
+.slot {
+  min-height: 3.25rem;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Evita que el campo de fecha se salga de la pantalla en iPhone */
+.campo { min-width: 0; max-width: 100%; }
+input[type="date"].campo { min-height: 3rem; -webkit-appearance: none; appearance: none; }
+
+/* En celular texto de 16px para que no haga zoom al tocar un campo */
+@media (max-width: 639px) {
+  .campo { font-size: 16px; }
+  .slot { font-size: .85rem; }
+}
+
+/* Horario ya reservado por otro cliente */
+.slot.ocupado {
+  opacity: 1;
+  text-decoration: none;
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+.slot.ocupado .slot-precio { opacity: 1; font-weight: 600; }
+
+/* Horario separado esperando confirmación */
+.slot.pendiente {
+  opacity: 1;
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #b45309;
+}
+.slot.pendiente .slot-precio { opacity: 1; font-weight: 600; }
